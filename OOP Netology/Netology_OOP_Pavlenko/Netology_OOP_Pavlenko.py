@@ -24,11 +24,7 @@ class Student:
     def __str__(self):
         result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.__average_grade()}\nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
         return result
-        
-
-
-       
-
+    
     def __lt__(self, other):
         if not isinstance(self, Student) and course not in self.courses_in_progress:
             print('Error')
@@ -53,8 +49,6 @@ class Lecturer(Mentor):
     def __average_grade(self):
         av_grades = [sum(i)/len(i) for i in self.grades.values()]
         return sum(av_grades)/len(self.grades)
-
-        
 
     def __lt__(self, course, other):
         if not isinstance(self, Lecturer) and course not in self.courses_attached:
@@ -82,9 +76,13 @@ class Reviewer(Mentor):
         result = f'Имя: {self.name}\nФамилия: {self.surname}'
         return result
  
+
+
 best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.courses_in_progress += ['Python']
 best_student.courses_in_progress += ['Physics']
+
+standart_student = Student('Maxim', 'Pavlenko', )
  
 cool_reviewer = Reviewer('Some', 'Buddy')
 cool_reviewer.courses_attached += ['Python']
