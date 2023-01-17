@@ -7,6 +7,7 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
+        
     def rate_lecturer(self, lecturer, course, grade):
         if isinstance(lecturer, Lecturer) and course in self.courses_in_progress and course in lecturer.courses_attached:
             if course in lecturer.grades:
@@ -15,6 +16,25 @@ class Student:
                 lecturer.grades[course] = [grade]
         else:
             return 'Error'
+
+    def __average_grade(self):
+        av_grades = [sum(i)/len(i) for i in self.grades.values()]
+        return sum(av_grades)/len(self.grades)
+
+    def __str__(self):
+        result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.__average_grade()}\nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
+        return result
+        
+
+
+       
+
+    def __lt__(self, other):
+        if not isinstance(self, Student) and course not in self.courses_in_progress:
+            print('Error')
+            return
+        else:
+            return self.__average_grade() < other.__average_grade()
 
         
 class Mentor:
@@ -30,6 +50,23 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.grades = {}
 
+    def __average_grade(self):
+        av_grades = [sum(i)/len(i) for i in self.grades.values()]
+        return sum(av_grades)/len(self.grades)
+
+        
+
+    def __lt__(self, course, other):
+        if not isinstance(self, Lecturer) and course not in self.courses_attached:
+            print('Error')
+            return
+        else:
+            return self.__average_grade() < other.__average_grade()
+
+    def __str__(self):
+        result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.__average_grade()}'
+        return result
+
 
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
@@ -40,6 +77,10 @@ class Reviewer(Mentor):
                 student.grades[course] = [grade]
         else:
             return 'Error'
+    
+    def __str__(self):
+        result = f'Имя: {self.name}\nФамилия: {self.surname}'
+        return result
  
 best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.courses_in_progress += ['Python']
@@ -53,7 +94,7 @@ cool_reviewer.courses_attached += ['Python']
 best_lecturer = Lecturer('Albert', 'Einstein')
 best_lecturer.courses_attached += ['Physics']
  
-cool_reviewer.rate_hw(best_student, 'Python', 10)
+cool_reviewer.rate_hw(best_student, 'Python', 1)
 cool_reviewer.rate_hw(best_student, 'Python', 10)
 cool_reviewer.rate_hw(best_student, 'Python', 10)
 
@@ -61,3 +102,5 @@ best_student.rate_lecturer(best_lecturer, 'Physics', 9)
  
 print(best_student.grades)
 print(best_lecturer.grades)
+print(best_student)
+print(best_lecturer)
