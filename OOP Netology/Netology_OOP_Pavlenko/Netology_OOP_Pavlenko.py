@@ -21,7 +21,7 @@ class Mentor:
             else:
                 student.grades[course] = [grade]
         else:
-            return 'Îøèáêà'
+            return 'Error'
  
 best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.courses_in_progress += ['Python']
