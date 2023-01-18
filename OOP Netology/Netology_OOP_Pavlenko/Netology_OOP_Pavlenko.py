@@ -84,6 +84,8 @@ class Reviewer(Mentor):
  
 
 
+
+
 first_student = Student('Ruoy', 'Eman', 'Male')
 second_student = Student('Maxim', 'Pavlenko', 'Male')
 
@@ -120,6 +122,11 @@ second_student.rate_lecturer(second_lecturer, 'Python', 8)
 first_student.rate_lecturer(second_lecturer, 'Geometry', 5)
 second_student.rate_lecturer(second_lecturer, 'Geometry', 10)
 
+print(first_student.grades)
+print(second_student.grades)
+print(first_lecturer.grades)
+print(second_lecturer.grades)
+
 
 print(f'{first_student}\n\n{second_student}')
 print('\n')
@@ -129,3 +136,43 @@ print(f'{first_reviewer}\n\n{second_reviewer}')
 
 print(second_student>first_student)
 print(second_lecturer<first_lecturer)
+
+students = (first_student, second_student)
+course = 'Python'
+
+def average_grade_students(course, *args):
+    sum_marks = 0
+    number_marks = 0
+    for j in range(len(args)):
+        if course in args[j].grades:
+            number_marks += len(args[j].grades[course])
+            sum_marks += sum(args[j].grades[course])
+    
+    if number_marks != 0:
+        av_score=round(sum_marks/number_marks,1)
+        print(f'Средняя оценка студентов по курсу {course}: {av_score}')
+    else:
+        print(f'На курсе {course} студенты еще не получили оценок')
+                  
+
+average_grade_students(course, *students)
+
+lecturers = (first_lecturer, second_lecturer)
+course = 'Python'
+
+def average_grade_lecturers(course, *args):
+    sum_marks = 0
+    number_marks = 0
+    for j in range(len(args)):
+        if course in args[j].grades:
+            number_marks += len(args[j].grades[course])
+            sum_marks += sum(args[j].grades[course])
+    
+    if number_marks != 0:
+        av_score=round(sum_marks/number_marks,1)
+        print(f'Средняя оценка лекторов по курсу {course}: {av_score}')
+    else:
+        print(f'На курсе {course} лекторы еще не получили оценок')
+                  
+
+average_grade_lecturers(course, *lecturers)
