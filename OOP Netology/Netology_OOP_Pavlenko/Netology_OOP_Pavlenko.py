@@ -122,11 +122,6 @@ second_student.rate_lecturer(second_lecturer, 'Python', 8)
 first_student.rate_lecturer(second_lecturer, 'Geometry', 5)
 second_student.rate_lecturer(second_lecturer, 'Geometry', 10)
 
-print(first_student.grades)
-print(second_student.grades)
-print(first_lecturer.grades)
-print(second_lecturer.grades)
-
 
 print(f'{first_student}\n\n{second_student}')
 print('\n')
