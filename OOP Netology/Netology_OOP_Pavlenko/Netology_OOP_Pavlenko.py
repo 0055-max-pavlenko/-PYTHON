@@ -25,11 +25,11 @@ class Student:
             return 0
 
     def __str__(self):
-        result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.__average_grade()}\nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
+        result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.__average_grade()}\nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}\n'
         return result
     
     def __lt__(self, other):
-        if not isinstance(self, Student) and course not in self.courses_in_progress:
+        if not isinstance(self, Student):
             print('Error')
             return
         else:
@@ -56,15 +56,15 @@ class Lecturer(Mentor):
         else:
             return 0
 
-    def __lt__(self, course, other):
-        if not isinstance(self, Lecturer) and course not in self.courses_attached:
+    def __lt__(self, other):
+        if not isinstance(self, Lecturer):
             print('Error')
             return
         else:
             return self.__average_grade() < other.__average_grade()
 
     def __str__(self):
-        result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.__average_grade()}'
+        result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.__average_grade()}\n'
         return result
 
 
@@ -79,40 +79,53 @@ class Reviewer(Mentor):
             return 'Error'
     
     def __str__(self):
-        result = f'Имя: {self.name}\nФамилия: {self.surname}'
+        result = f'Имя: {self.name}\nФамилия: {self.surname}\n'
         return result
  
 
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python']
-best_student.courses_in_progress += ['Physics']
+first_student = Student('Ruoy', 'Eman', 'Male')
+second_student = Student('Maxim', 'Pavlenko', 'Male')
 
-standart_student = Student('Maxim', 'Pavlenko', 'Male')
-standart_student.courses_in_progress += ['Physics']
-standart_student.courses_in_progress += ['Geometry']
+first_student.courses_in_progress += ['Python','Physics','Geometry']
+#first_student.courses_in_progress += ['Physics']
+#first_student.courses_in_progress += ['Geometry']
+second_student.courses_in_progress += ['Python','Physics','Geometry']
+#second_student.courses_in_progress += ['Physics']
+#second_student.courses_in_progress += ['Geometry']
+
  
-cool_reviewer = Reviewer('Some', 'Buddy')
-cool_reviewer.courses_attached += ['Python']
-best_reviewer = Reviewer('Dmitry', 'Nagiev')
-best_reviewer.courses_attached += ['Python']
-best_reviewer.courses_attached += ['Geometry']
+first_reviewer = Reviewer('Some', 'Buddy')
+second_reviewer = Reviewer('Dmitry', 'Nagiev')
 
-best_lecturer = Lecturer('Albert', 'Einstein')
-best_lecturer.courses_attached += ['Physics']
-cool_lecturer = Lecturer('Polina','Gagarina')
-cool_lecturer.courses_attached += ['Geometry']
+first_reviewer.courses_attached += ['Python']
+second_reviewer.courses_attached += ['Phisics','Geometry']
+#second_reviewer.courses_attached += ['Geometry']
+
+first_lecturer = Lecturer('Albert', 'Einstein')
+second_lecturer = Lecturer('Polina','Gagarina')
+
+first_lecturer.courses_attached += ['Physics']
+second_lecturer.courses_attached += ['Geometry','Python']
+#second_lecturer.courses_attached += ['Geometry'] 
+first_reviewer.rate_hw(first_student, 'Python', 5)
+first_reviewer.rate_hw(first_student, 'Geometry', 10)
+first_reviewer.rate_hw(first_student, 'Physics', 5)
+second_reviewer.rate_hw(second_student, 'Python', 10)
+second_reviewer.rate_hw(first_student, 'Geometry', 10)
+second_reviewer.rate_hw(first_student, 'Physics', 10)
+
+
+
+
+first_student.rate_lecturer(first_lecturer, 'Physics', 10)
+second_student.rate_lecturer(first_lecturer, 'Physics', 10)
+first_student.rate_lecturer(second_lecturer, 'Phyton', 9)
+second_student.rate_lecturer(second_lecturer, 'Phyton', 5)
+first_student.rate_lecturer(second_lecturer, 'Geometry', 5)
+second_student.rate_lecturer(second_lecturer, 'Geometry', 10)
  
-cool_reviewer.rate_hw(best_student, 'Python', 1)
-cool_reviewer.rate_hw(best_student, 'Geometry', 10)
-cool_reviewer.rate_hw(best_student, 'Python', 10)
 
-best_student.rate_lecturer(best_lecturer, 'Physics', 9)
- 
-
-print(best_student)
-print(standart_student)
-print(best_lecturer)
-print(cool_lecturer)
-print(cool_reviewer)
-print(best_reviewer)
+print(first_student, second_student)
+print(first_lecturer, second_lecturer)
+print(first_reviewer,second_reviewer)
