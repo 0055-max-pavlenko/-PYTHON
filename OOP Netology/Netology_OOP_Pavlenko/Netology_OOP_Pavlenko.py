@@ -20,12 +20,12 @@ class Student:
     def __average_grade(self):
         if len(self.grades) != 0:
             av_grades = [sum(i)/len(i) for i in self.grades.values()]
-            return sum(av_grades)/len(self.grades)
+            return round(sum(av_grades)/len(self.grades),1)
         else:
             return 0
 
     def __str__(self):
-        result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.__average_grade()}\nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}\n'
+        result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.__average_grade()}\nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
         return result
     
     def __lt__(self, other):
@@ -52,7 +52,7 @@ class Lecturer(Mentor):
     def __average_grade(self):
         if len(self.grades) != 0:
             av_grades = [sum(i)/len(i) for i in self.grades.values()]
-            return sum(av_grades)/len(self.grades)
+            return round(sum(av_grades)/len(self.grades),1)
         else:
             return 0
 
@@ -64,7 +64,7 @@ class Lecturer(Mentor):
             return self.__average_grade() < other.__average_grade()
 
     def __str__(self):
-        result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.__average_grade()}\n'
+        result = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.__average_grade()}'
         return result
 
 
@@ -79,7 +79,7 @@ class Reviewer(Mentor):
             return 'Error'
     
     def __str__(self):
-        result = f'Имя: {self.name}\nФамилия: {self.surname}\n'
+        result = f'Имя: {self.name}\nФамилия: {self.surname}'
         return result
  
 
@@ -88,44 +88,44 @@ first_student = Student('Ruoy', 'Eman', 'Male')
 second_student = Student('Maxim', 'Pavlenko', 'Male')
 
 first_student.courses_in_progress += ['Python','Physics','Geometry']
-#first_student.courses_in_progress += ['Physics']
-#first_student.courses_in_progress += ['Geometry']
 second_student.courses_in_progress += ['Python','Physics','Geometry']
-#second_student.courses_in_progress += ['Physics']
-#second_student.courses_in_progress += ['Geometry']
 
  
 first_reviewer = Reviewer('Some', 'Buddy')
 second_reviewer = Reviewer('Dmitry', 'Nagiev')
 
 first_reviewer.courses_attached += ['Python']
-second_reviewer.courses_attached += ['Phisics','Geometry']
-#second_reviewer.courses_attached += ['Geometry']
+second_reviewer.courses_attached += ['Physics','Geometry']
+
 
 first_lecturer = Lecturer('Albert', 'Einstein')
 second_lecturer = Lecturer('Polina','Gagarina')
 
 first_lecturer.courses_attached += ['Physics']
 second_lecturer.courses_attached += ['Geometry','Python']
-#second_lecturer.courses_attached += ['Geometry'] 
+
 first_reviewer.rate_hw(first_student, 'Python', 5)
-first_reviewer.rate_hw(first_student, 'Geometry', 10)
-first_reviewer.rate_hw(first_student, 'Physics', 5)
-second_reviewer.rate_hw(second_student, 'Python', 10)
-second_reviewer.rate_hw(first_student, 'Geometry', 10)
+first_reviewer.rate_hw(second_student, 'Python', 10)
+
 second_reviewer.rate_hw(first_student, 'Physics', 10)
+second_reviewer.rate_hw(first_student, 'Geometry', 5)
 
+second_reviewer.rate_hw(second_student, 'Physics', 10)
+second_reviewer.rate_hw(second_student, 'Geometry', 10)
 
-
-
-first_student.rate_lecturer(first_lecturer, 'Physics', 10)
-second_student.rate_lecturer(first_lecturer, 'Physics', 10)
-first_student.rate_lecturer(second_lecturer, 'Phyton', 9)
-second_student.rate_lecturer(second_lecturer, 'Phyton', 5)
+first_student.rate_lecturer(first_lecturer, 'Physics', 5)
+second_student.rate_lecturer(first_lecturer, 'Physics', 7)
+first_student.rate_lecturer(second_lecturer, 'Python', 5)
+second_student.rate_lecturer(second_lecturer, 'Python', 8)
 first_student.rate_lecturer(second_lecturer, 'Geometry', 5)
 second_student.rate_lecturer(second_lecturer, 'Geometry', 10)
- 
 
-print(first_student, second_student)
-print(first_lecturer, second_lecturer)
-print(first_reviewer,second_reviewer)
+
+print(f'{first_student}\n\n{second_student}')
+print('\n')
+print(f'{first_lecturer}\n\n{second_lecturer}')
+print('\n')
+print(f'{first_reviewer}\n\n{second_reviewer}')
+
+print(second_student>first_student)
+print(second_lecturer<first_lecturer)
